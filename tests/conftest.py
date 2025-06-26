@@ -1,30 +1,40 @@
+import os
+
 import pytest
 from selene import browser
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from dotenv import load_dotenv
 
 from demoqa.utils import attachments
-from tests_data.user_info import User
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(autouse=True)
+def load_env():
+    load_dotenv()
+
+
+@pytest.fixture(scope="function")
 def setup_browser():
+
+    login = os.getenv('Login')
+    passw = os.getenv('Password')
+    host = os.getenv('Host')
 
     options = Options()
     capabilities = {
-        "browserName": "chrome",
-        "browserVersion": "127.0",
-        "selenoid:options": {
-            "enableVideo": True
-        }
+        'browserName': 'chrome',
+        'browserVersion': '127.0',
+        'selenoid:options': dict(enableVideo=True),
     }
 
-    options.page_load_strategy = "eager"
+    options.page_load_strategy = 'eager'
     options.capabilities.update(capabilities)
 
     driver = webdriver.Remote(
-        command_executor="https://user1:1234@selenoid.autotests.cloud/wd/hub",
-        options=options)
+        command_executor=f'https://{login}:{passw}@{host}/wd/hub',
+        options=options,
+    )
 
     browser.config.driver = driver
 
@@ -33,19 +43,3 @@ def setup_browser():
     attachments.add_logs(browser)
     attachments.add_screenshot(browser)
     browser.close()
-
-
-@pytest.mark.parametrize('fio', 'mail', 'curr_address', 'per_address',
-                         ())
-@pytest.fixture(scope='function')
-def get_user(fio, mail, curr_address, per_address):
-    return User(full_name=fio, email=mail, current_address=curr_address, permanent_address=per_address)
-
-
-@pytest.fixture()
-def valid_info(get_user):
-
-    return ['Name:', 'Test',
-            'mail:', 'sss@example.com',
-            'Current Address:', 'tttsss',
-            'Permananet Address:', 'sssss']
