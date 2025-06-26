@@ -37,7 +37,7 @@ class TextBoxPage:
         return self
 
     def should_be_form_info(self, values:list):
-        self.browser.element('#output').all('p').should(have.exact_text(values))
+        self.browser.element('#output').all('p').should(have.exact_texts(values))
 
     def fill_text_box_form(self,user:User):
 
