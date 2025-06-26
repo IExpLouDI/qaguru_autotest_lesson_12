@@ -1,0 +1,23 @@
+import allure
+from allure_commons.types import AttachmentType
+
+
+# Скриншоты
+def add_screenshot(browser):
+    png = browser.driver.get_screenshot_as_png()
+    allure.attach(body=png, name='screenshot', attachment_type=AttachmentType.PNG, extension='.png')
+
+# логи
+def add_logs(browser):
+    try:
+        logs = browser.driver.execute('getLog', {'type': 'browser'})["value"]
+        log = ''.join(f'{text}\n' for text in logs)
+    except Exception as err:
+        log = f'Доступ к логам отсутствует - {err}'
+
+    allure.attach(log, 'browser_logs', AttachmentType.TEXT, '.log')
+
+# html-код страницы
+def add_html(browser):
+    html = browser.driver.page_source
+    allure.attach(html, 'page_source', AttachmentType.HTML, '.html')
