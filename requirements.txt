@@ -1,0 +1,4 @@
+allure-pytest==2.14.3
+pytest==8.4.1
+python-dotenv==1.1.1
+selene==2.0.0rc9
