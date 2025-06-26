@@ -17,22 +17,22 @@ def load_env():
 @pytest.fixture(scope="function")
 def setup_browser():
 
-    login = os.getenv('Login')
-    passw = os.getenv('Password')
-    host = os.getenv('Host')
+    login = os.getenv("Login")
+    passw = os.getenv("Password")
+    host = os.getenv("Host")
 
     options = Options()
     capabilities = {
-        'browserName': 'chrome',
-        'browserVersion': '127.0',
-        'selenoid:options': dict(enableVideo=True),
+        "browserName": "chrome",
+        "browserVersion": "127.0",
+        "selenoid:options": dict(enableVideo=True),
     }
 
-    options.page_load_strategy = 'eager'
+    options.page_load_strategy = "eager"
     options.capabilities.update(capabilities)
 
     driver = webdriver.Remote(
-        command_executor=f'https://{login}:{passw}@{host}/wd/hub',
+        command_executor=f"https://{login}:{passw}@{host}/wd/hub",
         options=options,
     )
 
