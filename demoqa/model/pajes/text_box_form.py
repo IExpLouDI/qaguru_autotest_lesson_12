@@ -1,4 +1,5 @@
 import allure
+from selene import be, have
 
 from tests_data.user_info import User
 
@@ -35,8 +36,8 @@ class TextBoxPage:
         self.browser.element('#submit').click()
         return self
 
-    def should_be_form_info(self):
-        self.browser.element('#output').all('p')
+    def should_be_form_info(self, values:list):
+        self.browser.element('#output').all('p').should(have.exact_text(values))
 
     def fill_text_box_form(self,user:User):
 
@@ -54,4 +55,3 @@ class TextBoxPage:
 
         with allure.step('Публикуем форму submit'):
             self.press_submit()
-
