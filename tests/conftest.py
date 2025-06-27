@@ -17,9 +17,9 @@ def load_env():
 @pytest.fixture(scope="function")
 def setup_browser():
 
-    login = os.getenv("Login")
-    passw = os.getenv("Password")
-    host = os.getenv("Host")
+    login = os.getenv("SELENOID_LOGIN")
+    passw = os.getenv("SELENOID_PASSWORD")
+    host = os.getenv("SELENOID_HOST")
 
     options = Options()
     capabilities = {
@@ -32,7 +32,7 @@ def setup_browser():
     options.capabilities.update(capabilities)
 
     driver = webdriver.Remote(
-        command_executor=f"https://{login}:{passw}@{host}/wd/hub",
+        command_executor=f"https://{login}:{passw}@{host}",
         options=options,
     )
 
@@ -42,4 +42,5 @@ def setup_browser():
     attachments.add_html(browser)
     attachments.add_logs(browser)
     attachments.add_screenshot(browser)
+    attachments.add_video(browser)
     browser.close()
