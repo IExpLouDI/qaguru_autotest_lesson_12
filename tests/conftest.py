@@ -25,7 +25,7 @@ def setup_browser():
     capabilities = {
         "browserName": "chrome",
         "browserVersion": "127.0",
-        "selenoid:options": dict(enableVideo=True),
+        "selenoid:options": {"enableVNC": True, "enableVideo": True, "enableLog": True},
     }
 
     options.page_load_strategy = "eager"
