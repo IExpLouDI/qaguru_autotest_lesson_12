@@ -3,16 +3,15 @@ from allure_commons.types import Severity
 
 from demoqa.model.pages.registration_page import RegistrationPage
 from tests_data.user_info import UserInfo
-from selene import browser
 
 
-@allure.id('01_registration_page')
-@allure.tag('web')
+@allure.id("01_registration_page")
+@allure.tag("web")
 @allure.severity(Severity.BLOCKER)
-@allure.label('owner', 'vssuchkov')
-@allure.feature('Заполнение формы пользователя')
-@allure.story('Форма регистрации')
-@allure.link('https://demoqa.com/automation-practice-form', name='Testing form')
+@allure.label("owner", "vssuchkov")
+@allure.feature("Заполнение формы пользователя")
+@allure.story("Форма регистрации")
+@allure.link("https://demoqa.com/automation-practice-form", name="Testing form")
 def test_registration_page(setup_browser):
     registration_page = RegistrationPage(setup_browser)
     user = UserInfo()
